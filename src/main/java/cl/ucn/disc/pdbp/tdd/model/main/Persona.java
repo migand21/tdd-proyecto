@@ -3,56 +3,56 @@ package cl.ucn.disc.pdbp.tdd.model.main;
 import cl.ucn.disc.pdbp.tdd.model.utils.Validation;
 
 /**
- * Persona Class
+ * Persona Class.
  *
  * @author Miguel León Garrido
  */
 public class Persona {
 
   /**
-   * The name
+   * The name.
    */
   private final String nombre;
 
   /**
-   * The last name
+   * The last name.
    */
   private final String apellido;
 
   /**
-   * The rut
+   * The rut.
    */
   private final String rut;
 
   /**
-   * The direccion
+   * The direccion.
    */
   private final String direccion;
 
   /**
-   * The telefono fijo
+   * The telefono fijo.
    */
   private final Integer telefonoFijo;
 
   /**
-   * The telefono movil
+   * The telefono movil.
    */
   private final Integer telefonoMovil;
 
   /**
-   * The email
+   * The email.
    */
   private final String email;
 
-  /**
+  /** Constructor.
    *
-   * @param nombre
-   * @param apellido
-   * @param rut
-   * @param direccion
-   * @param telefonoFijo
-   * @param telefonoMovil
-   * @param email
+   * @param nombre nombre de la persona
+   * @param apellido apellido de la persona
+   * @param rut rut de la persona
+   * @param direccion direccion de la persona
+   * @param telefonoFijo telefono fijo de la persona
+   * @param telefonoMovil telefono movil de la persona
+   * @param email correo electronico de la persona
    */
   public Persona(String nombre, String apellido, String rut, String direccion, Integer telefonoFijo, Integer telefonoMovil, String email) {
     Validation v = new Validation();
@@ -67,7 +67,7 @@ public class Persona {
     this.email = email;
   }
 
-  /**
+  /** Getter.
    *
    * @return el nombre de la persona
    */
@@ -75,7 +75,7 @@ public class Persona {
     return this.nombre;
   }
 
-  /**
+  /** Getter.
    *
    * @return el apellido de la persona
    */
@@ -83,7 +83,7 @@ public class Persona {
     return this.apellido;
   }
 
-  /**
+  /** Getter.
    *
    * @return el nombre y apellido juntos
    */
@@ -91,7 +91,7 @@ public class Persona {
     return this.nombre + " " + this.apellido;
   }
 
-  /**
+  /** Getter.
    *
    * @return el rut de la persona
    */
@@ -99,7 +99,7 @@ public class Persona {
     return rut;
   }
 
-  /**
+  /** Getter.
    *
    * @return la direccion
    */
@@ -107,7 +107,7 @@ public class Persona {
     return direccion;
   }
 
-  /**
+  /** Getter.
    *
    * @return el telefono fijo
    */
@@ -115,7 +115,7 @@ public class Persona {
     return telefonoFijo;
   }
 
-  /**
+  /** Getter.
    *
    * @return el telefono movil
    */
@@ -123,7 +123,7 @@ public class Persona {
     return telefonoMovil;
   }
 
-  /**
+  /** Getter.
    *
    * @return el correo electronico
    */

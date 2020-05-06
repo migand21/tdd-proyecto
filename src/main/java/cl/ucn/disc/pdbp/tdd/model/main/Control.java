@@ -47,13 +47,13 @@ public class Control {
   /**
    * The Constructor.
    *
-   * @param fecha
-   * @param fechaProximoControl
-   * @param temperatura
-   * @param peso
-   * @param altura
-   * @param diagnostico
-   * @param nombreVeterinario
+   * @param fecha fecha del control
+   * @param fechaProximoControl fecha del proximo control
+   * @param temperatura temperatura del paciente
+   * @param peso peso del paciente
+   * @param altura altura del paciente
+   * @param diagnostico diagnostico del paciente
+   * @param nombreVeterinario nombre del veterinario que atendió al paciente
    */
   public Control(ZonedDateTime fecha, ZonedDateTime fechaProximoControl, float temperatura, float peso, float altura,
                  String diagnostico, String nombreVeterinario) {
@@ -66,49 +66,49 @@ public class Control {
     this.nombreVeterinario = nombreVeterinario;
   }
 
-  /** Getter para fecha del control.
+  /** Getter.
    * @return fecha
    */
   public ZonedDateTime getFecha() {
     return fecha;
   }
 
-  /**
+  /** Getter.
    * @return fecha del proximo control
    */
   public ZonedDateTime getFechaProximoControl() {
     return fechaProximoControl;
   }
 
-  /**
+  /** Getter.
    * @return la temperatura del paciente
    */
   public float getTemperatura() {
     return temperatura;
   }
 
-  /**
+  /** Getter.
    * @return el peso del paciente
    */
   public float getPeso() {
     return peso;
   }
 
-  /**
+  /** Getter.
    * @return la altura del paciente
    */
   public float getAltura() {
     return altura;
   }
 
-  /**
+  /** Getter.
    * @return informe con el diagnostico
    */
   public String getDiagnostico() {
     return diagnostico;
   }
 
-  /**
+  /** Getter.
    * @return nombre del veterinario
    */
   public String getNombreVeterinario() {
