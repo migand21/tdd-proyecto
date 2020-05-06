@@ -23,16 +23,16 @@ public class Validation {
       return false;
 
     int totalSum = 0;
-    for(int i = rutLength - 2;i>= 0;i--){
+    for(int i = rutLength - 2;i>= 0;i--) {
       int digitNumber = 0;
       try{
         digitNumber = Integer.parseInt(rut.substring(i,i+1));
-      }catch (Exception e){
+      }catch (Exception e) {
         return false;
       }
 
       int toMultiply = rutLength - i;
-      if(toMultiply > 7){
+      if(toMultiply > 7) {
         toMultiply -=6;
       }
       int toSum = digitNumber * toMultiply;
@@ -41,13 +41,13 @@ public class Validation {
 
     int number = 11 - (totalSum % 11);
     String correctValidationNumber;
-    if(number == 10){
+    if (number == 10) {
       correctValidationNumber = "K";
-    }else{
+    } else {
       correctValidationNumber = Integer.toString(number);
     }
 
-    if(correctValidationNumber.equalsIgnoreCase(validationNumber)){
+    if(correctValidationNumber.equalsIgnoreCase(validationNumber)) {
       return true;
     }
     else{
@@ -81,19 +81,19 @@ public class Validation {
    */
   public void isPersonaValid(String nombre, String apellido, String rutOk) {
 
-    if(nombre == null || apellido == null || rutOk == null){
+    if(nombre == null || apellido == null || rutOk == null) {
       throw new NullPointerException("Null parameter!");
     }
 
-    if(!isRutValid(rutOk)){
+    if(!isRutValid(rutOk)) {
       throw new RuntimeException("Invalid Rut!");
     }
 
-    if(!isNameValid(nombre)){
+    if(!isNameValid(nombre)) {
       throw new RuntimeException("Invalid Size for Name!");
     }
 
-    if(!isLastNameValid(apellido)){
+    if(!isLastNameValid(apellido)) {
       throw new RuntimeException("Invalid Size for Last Name!");
     }
   }

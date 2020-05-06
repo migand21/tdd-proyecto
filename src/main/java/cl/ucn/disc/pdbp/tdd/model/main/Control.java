@@ -3,49 +3,49 @@ package cl.ucn.disc.pdbp.tdd.model.main;
 import java.time.ZonedDateTime;
 
 /**
- * Control Class
+ * Control Class.
  *
  * @author Miguel León Garrido
  */
 public class Control {
 
   /**
-   * fecha del control
+   * fecha del control.
    */
   private final ZonedDateTime fecha;
 
   /**
-   * fecha del proximo control
+   * fecha del proximo control.
    */
   private final ZonedDateTime fechaProximoControl;
 
   /**
-   * temperatura del paciente en grados celcius
+   * temperatura del paciente en grados celcius.
    */
   private final float temperatura;
 
   /**
-   * peso del paciente en kilos
+   * peso del paciente en kilos.
    */
   private final float peso;
 
   /**
-   * altura del paciente en cm
+   * altura del paciente en cm.
    */
   private final float altura;
 
   /**
-   * diagnostico del paciente
+   * diagnostico del paciente.
    */
   private final String diagnostico;
 
   /**
-   * nombre del veterinario que realizo el control
+   * nombre del veterinario que realizo el control.
    */
   private final String nombreVeterinario;
 
   /**
-   * The Constructor
+   * The Constructor.
    *
    * @param fecha
    * @param fechaProximoControl
@@ -66,16 +66,14 @@ public class Control {
     this.nombreVeterinario = nombreVeterinario;
   }
 
-  /**
-   *
-   * @return fecha del control
+  /** Getter para fecha del control.
+   * @return fecha
    */
   public ZonedDateTime getFecha() {
     return fecha;
   }
 
   /**
-   *
    * @return fecha del proximo control
    */
   public ZonedDateTime getFechaProximoControl() {
@@ -83,7 +81,6 @@ public class Control {
   }
 
   /**
-   *
    * @return la temperatura del paciente
    */
   public float getTemperatura() {
@@ -91,7 +88,6 @@ public class Control {
   }
 
   /**
-   *
    * @return el peso del paciente
    */
   public float getPeso() {
@@ -99,7 +95,6 @@ public class Control {
   }
 
   /**
-   *
    * @return la altura del paciente
    */
   public float getAltura() {
@@ -107,7 +102,6 @@ public class Control {
   }
 
   /**
-   *
    * @return informe con el diagnostico
    */
   public String getDiagnostico() {
@@ -115,7 +109,6 @@ public class Control {
   }
 
   /**
-   *
    * @return nombre del veterinario
    */
   public String getNombreVeterinario() {
