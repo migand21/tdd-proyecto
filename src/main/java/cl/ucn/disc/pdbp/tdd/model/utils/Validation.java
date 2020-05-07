@@ -72,11 +72,7 @@ public class Validation {
     }
 
     String validationNumber = rut.substring(rutLength - 1);
-    if (correctValidationNumber.equalsIgnoreCase(validationNumber)) {
-      return true;
-    } else {
-      return false;
-    }
+    return correctValidationNumber.equalsIgnoreCase(validationNumber);
   }
 
   /**
@@ -85,10 +81,7 @@ public class Validation {
    * @return boolean.
    */
   public static boolean isNameValid(String name) {
-    if (name.length() < 2) {
-      return false;
-    }
-    return true;
+    return name.length() >= 2;
   }
 
   /**
@@ -97,34 +90,7 @@ public class Validation {
    * @return boolean.
    */
   public static boolean isLastNameValid(String lastName) {
-    if (lastName.length() < 3) {
-      return false;
-    }
-    return true;
+    return lastName.length() >= 3;
   }
 
-  /**
-   * Validation for Persona constructor.
-   * @param nombre nombre de la persona.
-   * @param apellido apellido de la persona.
-   * @param rutOk rut de la persona.
-   */
-  public void isPersonaValid(String nombre, String apellido, String rutOk) {
-
-    if (nombre == null || apellido == null || rutOk == null) {
-      throw new NullPointerException("Null parameter!");
-    }
-
-    if (!isRutValid(rutOk)) {
-      throw new RuntimeException("Invalid Rut!");
-    }
-
-    if (!isNameValid(nombre)) {
-      throw new RuntimeException("Invalid Size for Name!");
-    }
-
-    if (!isLastNameValid(apellido)) {
-      throw new RuntimeException("Invalid Size for Last Name!");
-    }
-  }
 }

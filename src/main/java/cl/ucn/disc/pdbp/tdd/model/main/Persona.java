@@ -102,8 +102,23 @@ public class Persona {
    */
   public Persona(String nombre, String apellido, String rut, String direccion, Integer telefonoFijo,
                  Integer telefonoMovil, String email) {
+
     Validation v = new Validation();
-    v.isPersonaValid(nombre,apellido,rut);
+    if (nombre == null || apellido == null || rut == null) {
+      throw new NullPointerException("Null parameter!");
+    }
+
+    if (!v.isRutValid(rut)) {
+      throw new RuntimeException("Invalid Rut!");
+    }
+
+    if (!v.isNameValid(nombre)) {
+      throw new RuntimeException("Invalid Size for Name!");
+    }
+
+    if (!v.isLastNameValid(apellido)) {
+      throw new RuntimeException("Invalid Size for Last Name!");
+    }
 
     this.nombre = nombre;
     this.apellido = apellido;

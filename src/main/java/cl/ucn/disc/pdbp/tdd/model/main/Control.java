@@ -91,7 +91,7 @@ public class Control {
   }
 
   /** Getter.
-   * @return fecha
+   * @return fecha del control
    */
   public ZonedDateTime getFecha() {
     return fecha;
