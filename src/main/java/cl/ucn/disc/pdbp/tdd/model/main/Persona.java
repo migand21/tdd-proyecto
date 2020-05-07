@@ -25,48 +25,70 @@
 package cl.ucn.disc.pdbp.tdd.model.main;
 
 import cl.ucn.disc.pdbp.tdd.model.utils.Validation;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
 /**
  * Persona Class.
  *
  * @author Miguel León Garrido
  */
+@DatabaseTable(tableName = "persona")
 public class Persona {
 
   /**
+   * The id.
+   */
+  @DatabaseField(generatedId = true)
+  private Long id;
+  /**
    * The name.
    */
-  private final String nombre;
+  @DatabaseField(canBeNull = false)
+  private String nombre;
 
   /**
    * The last name.
    */
-  private final String apellido;
+  @DatabaseField(canBeNull = false)
+  private String apellido;
 
   /**
    * The rut.
    */
-  private final String rut;
+  @DatabaseField(canBeNull = false, index = true)
+  private String rut;
 
   /**
    * The direccion.
    */
-  private final String direccion;
+  @DatabaseField(canBeNull = false)
+  private String direccion;
 
   /**
    * The telefono fijo.
    */
-  private final Integer telefonoFijo;
+  @DatabaseField(canBeNull = false)
+  private Integer telefonoFijo;
 
   /**
    * The telefono movil.
    */
-  private final Integer telefonoMovil;
+  @DatabaseField(canBeNull = false)
+  private Integer telefonoMovil;
 
   /**
    * The email.
    */
-  private final String email;
+  @DatabaseField(canBeNull = false)
+  private String email;
+
+  /**
+   * Empty Constructor
+   */
+  Persona() {
+    //nothing
+  }
 
   /** Constructor.
    *
