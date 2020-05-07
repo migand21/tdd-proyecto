@@ -100,7 +100,8 @@ public class Persona {
    * @param telefonoMovil telefono movil de la persona
    * @param email correo electronico de la persona
    */
-  public Persona(String nombre, String apellido, String rut, String direccion, Integer telefonoFijo, Integer telefonoMovil, String email) {
+  public Persona(String nombre, String apellido, String rut, String direccion, Integer telefonoFijo,
+                 Integer telefonoMovil, String email) {
     Validation v = new Validation();
     v.isPersonaValid(nombre,apellido,rut);
 
@@ -111,6 +112,14 @@ public class Persona {
     this.telefonoFijo = telefonoFijo;
     this.telefonoMovil = telefonoMovil;
     this.email = email;
+  }
+
+  /** Getter.
+   *
+   * @return el id de la persona
+   */
+  public Long getId() {
+    return id;
   }
 
   /** Getter.
