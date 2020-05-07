@@ -38,6 +38,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * The Model for DB Testing
@@ -46,24 +47,52 @@ import java.sql.SQLException;
  */
 public final class StorageTest {
 
+  /**
+   * The Logger (console)
+   */
   private static final Logger log = LoggerFactory.getLogger(StorageTest.class);
 
+  /**
+   * Test a insert for Persona in the DB.
+   * - La persona debe ser ingresada a la BD
+   * - Se debe poder obtener la persona desde la BD
+   * - Solo puede haber una persona con el mismo rut
+   * - Los datos ingresados deben ser correctos
+   */
   @Test
-  public void testDatabase() throws SQLException, IOException {
+  public void testDatabase() throws SQLException {
+
+    // The database url to use
     String databaseUrl = "jdbc:h2:mem:account";
 
+    // connection configuration
     try(ConnectionSource connectionSource = new JdbcConnectionSource(databaseUrl)) {
 
+      // create the persona table if not existing
       TableUtils.createTableIfNotExists(connectionSource, Persona.class);
 
       Dao<Persona,Long> daoPersona = DaoManager.createDao(connectionSource,Persona.class);
 
+      // creating a persona for testing
       Persona persona = new Persona("Andrea","Contreras","152532873","michimalongo 1826",
         224439,63887303,"asd123@gmail.com");
       int tuples = daoPersona.create(persona);
       log.debug("Id: {}",persona.getId());
       Assertions.assertEquals(1,tuples,"Save tuples != 1");
 
+      Persona personaDb = daoPersona.queryForId(persona.getId());
+
+      Assertions.assertEquals(persona.getNombre(),personaDb.getNombre(),"Error, Nombres distintos");
+      Assertions.assertEquals(persona.getApellido(),personaDb.getApellido(),"Error, Apellidos distintos");
+      Assertions.assertEquals(persona.getRut(),personaDb.getRut(),"Error, Ruts distintos");
+
+      List<Persona> personaList = daoPersona.queryForEq("rut","152532873");
+      Assertions.assertEquals(1,personaList.size(),"Hay mas de una persona con el mismo rut");
+
+      Assertions.assertEquals(0,daoPersona.queryForEq("rut","123456").size(),"No deberia existir este rut");
+
+    }catch (IOException e) {
+      log.error("Error",e);
     }
 
   }
