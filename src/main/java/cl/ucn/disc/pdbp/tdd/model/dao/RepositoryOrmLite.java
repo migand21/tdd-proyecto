@@ -81,7 +81,7 @@ public class RepositoryOrmLite<T,K> implements Repository<T, K> {
 
   /**
    * @param t to save
-   * @return true
+   * @return true if t was inserted, false otherwise.
    */
   @Override
   public boolean create(T t) {
@@ -95,7 +95,7 @@ public class RepositoryOrmLite<T,K> implements Repository<T, K> {
 
   /**
    * @param t to update
-   * @return true
+   * @return true if t was inserted, false otherwise.
    */
   @Override
   public boolean update(T t) {
@@ -109,7 +109,7 @@ public class RepositoryOrmLite<T,K> implements Repository<T, K> {
 
   /**
    * @param id to search
-   * @return true
+   * @return true if this id row was deleted, false otherwise.
    */
   @Override
   public boolean delete(K id) {

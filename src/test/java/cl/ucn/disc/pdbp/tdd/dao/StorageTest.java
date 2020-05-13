@@ -149,7 +149,6 @@ public final class StorageTest {
         Assertions.fail("No se elimino la persona");
       }
 
-
     }catch (IOException | SQLException e) {
       throw new RuntimeException(e);
     }

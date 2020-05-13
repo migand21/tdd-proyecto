@@ -24,6 +24,8 @@
 
 package cl.ucn.disc.pdbp.tdd.model.utils;
 
+import java.util.regex.Pattern;
+
 /**
  * Validation Class.
  *
@@ -32,9 +34,21 @@ package cl.ucn.disc.pdbp.tdd.model.utils;
 public class Validation {
 
   /**
+   * The regular expression.
+   * - https://howtodoinjava.com/regex/java-regex-validate-email-address/
+   */
+  @SuppressWarnings("HardcodedFileSeparator")
+  private static final String REGEX = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+
+  /**
+   * The regular expression compiled.
+   */
+  private static final Pattern PATTERN = Pattern.compile(REGEX);
+
+  /**
    * Validation of the rut.
    * @param rut rut de la persona
-   * @return boolean
+   * @return true if valid, false otherwise.
    */
   public static boolean isRutValid(String rut) {
     if (rut == null) {
@@ -78,7 +92,7 @@ public class Validation {
   /**
    * Validation of the name.
    * @param name nombre de la persona.
-   * @return boolean.
+   * @return true if valid, false otherwise.
    */
   public static boolean isNameValid(String name) {
     return name.length() >= 2;
@@ -87,10 +101,45 @@ public class Validation {
   /**
    * Validation of the last name.
    * @param lastName apellido de la persona.
-   * @return boolean.
+   * @return true if valid, false otherwise.
    */
   public static boolean isLastNameValid(String lastName) {
     return lastName.length() >= 3;
   }
 
+  /**
+   *
+   * @param telefonoFijo to check.
+   * @return true if valid, false otherwise.
+   */
+  public boolean isTelefonoFijoValid(Integer telefonoFijo) {
+    return telefonoFijo > 1000000;
+  }
+
+  /**
+   *
+   * @param telefonoMovil to check.
+   * @return true if valid, false otherwise.
+   */
+  public boolean isTelefonoMovilValid(Integer telefonoMovil) {
+    return telefonoMovil > 1000000;
+  }
+
+  /**
+   *
+   * @param email to check.
+   * @return true if valid, false otherwise.
+   */
+  public boolean isEmailValid(String email) {
+    return PATTERN.matcher(email).find();
+  }
+
+  /**
+   *
+   * @param direccion to check
+   * @return true if valid, false otherwise.
+   */
+  public boolean isDireccionValid(String direccion) {
+    return direccion.length() > 2;
+  }
 }

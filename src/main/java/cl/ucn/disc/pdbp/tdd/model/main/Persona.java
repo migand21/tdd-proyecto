@@ -77,6 +77,7 @@ public class Persona {
   @DatabaseField(canBeNull = false)
   private Integer telefonoMovil;
 
+
   /**
    * The email.
    */
@@ -104,7 +105,7 @@ public class Persona {
                  Integer telefonoMovil, String email) {
 
     Validation v = new Validation();
-    if (nombre == null || apellido == null || rut == null) {
+    if (nombre == null || apellido == null || rut == null || direccion == null || telefonoMovil == null || telefonoFijo == null ||  email == null) {
       throw new NullPointerException("Null parameter!");
     }
 
@@ -116,7 +117,19 @@ public class Persona {
       throw new RuntimeException("Invalid Size for Name!");
     }
 
-    if (!v.isLastNameValid(apellido)) {
+    if (!v.isDireccionValid(direccion)) {
+      throw new RuntimeException("Invalid direccion!");
+    }
+
+    if (!v.isTelefonoFijoValid(telefonoFijo)) {
+      throw new RuntimeException("Invalid Size for Last Name!");
+    }
+
+    if (!v.isTelefonoMovilValid(telefonoMovil)) {
+      throw new RuntimeException("Invalid Size for Last Name!");
+    }
+
+    if (!v.isEmailValid(email)) {
       throw new RuntimeException("Invalid Size for Last Name!");
     }
 
@@ -207,4 +220,29 @@ public class Persona {
   public void setDireccion(String direccion) {
     this.direccion = direccion;
   }
+
+  /**
+   *
+   * @param telefonoFijo new telefonoFijo
+   */
+  public void setTelefonoFijo(Integer telefonoFijo) {
+    this.telefonoFijo = telefonoFijo;
+  }
+
+  /**
+   *
+   * @param telefonoMovil new telefonoMovil
+   */
+  public void setTelefonoMovil(Integer telefonoMovil) {
+    this.telefonoMovil = telefonoMovil;
+  }
+
+  /**
+   *
+   * @param email new email
+   */
+  public void setEmail(String email) {
+    this.email = email;
+  }
 }
+
