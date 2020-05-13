@@ -102,7 +102,7 @@ public class Persona {
    * @param email correo electronico de la persona
    */
   public Persona(String nombre, String apellido, String rut, String direccion, Integer telefonoFijo,
-                 Integer telefonoMovil, String email) {
+                 Integer telefonoMovil, String email) throws RuntimeException {
 
     Validation v = new Validation();
     if (nombre == null || apellido == null || rut == null || direccion == null || telefonoMovil == null || telefonoFijo == null ||  email == null) {
@@ -114,7 +114,11 @@ public class Persona {
     }
 
     if (!v.isNameValid(nombre)) {
-      throw new RuntimeException("Invalid Size for Name!");
+      throw new RuntimeException("Invalid Name!");
+    }
+
+    if (!v.isLastNameValid(apellido)) {
+      throw new RuntimeException("Invalid Last Name!");
     }
 
     if (!v.isDireccionValid(direccion)) {
@@ -122,11 +126,11 @@ public class Persona {
     }
 
     if (!v.isTelefonoFijoValid(telefonoFijo)) {
-      throw new RuntimeException("Invalid Size for Last Name!");
+      throw new RuntimeException("Invalid telefonoFijo!");
     }
 
     if (!v.isTelefonoMovilValid(telefonoMovil)) {
-      throw new RuntimeException("Invalid Size for Last Name!");
+      throw new RuntimeException("Invalid telefonoMovil!");
     }
 
     if (!v.isEmailValid(email)) {
