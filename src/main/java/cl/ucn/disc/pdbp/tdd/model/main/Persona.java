@@ -84,7 +84,7 @@ public class Persona {
   private String email;
 
   /**
-   * Empty Constructor
+   * Empty Constructor.
    */
   Persona() {
     //nothing
@@ -161,8 +161,7 @@ public class Persona {
     return this.nombre + " " + this.apellido;
   }
 
-  /** Getter.
-   *
+  /**
    * @return el rut de la persona
    */
   public String getRut() {

@@ -24,6 +24,8 @@
 
 package cl.ucn.disc.pdbp.tdd.dao;
 
+import cl.ucn.disc.pdbp.tdd.model.dao.Repository;
+import cl.ucn.disc.pdbp.tdd.model.dao.RepositoryOrmLite;
 import cl.ucn.disc.pdbp.tdd.model.main.Persona;
 import cl.ucn.disc.pdbp.tdd.model.utils.Validation;
 import com.j256.ormlite.dao.Dao;
@@ -95,6 +97,62 @@ public final class StorageTest {
       log.error("Error",e);
     }
 
+  }
+
+  /**
+   * Testing the repository.
+   */
+  @Test
+  public void testRepository() {
+
+    String databaseUrl = "jdbc:h2:mem:account";
+
+    try(ConnectionSource connectionSource = new JdbcConnectionSource(databaseUrl)) {
+
+      // create the persona table if not existing.
+      TableUtils.createTableIfNotExists(connectionSource, Persona.class);
+
+      //The repository.
+      Repository<Persona, Long> theRepo = new RepositoryOrmLite(connectionSource, Persona.class);
+
+      // Finding All
+      List<Persona> personas = theRepo.findAll();
+      // The size should be zero
+      Assertions.assertEquals(0, personas.size(), "Size != 0");
+
+      // Testing create
+      Persona persona = new Persona("Andrea", "Contreras", "152532873", "michimalongo 1826",
+        224439, 63887303, "asd123@gmail.com");
+      if (! theRepo.create(persona)) {
+        Assertions.fail("No se inserto la persona");
+      }
+
+      // Testing finding
+      Persona personaRepo = theRepo.findById(persona.getId());
+      if(personaRepo == null) {
+        Assertions.fail("No se encontro la persona");
+      }
+
+      //Testing if the persona was insert
+      List<Persona> personasInsert = theRepo.findAll();
+      // The size should be one
+      Assertions.assertEquals(1, personasInsert.size(), "Size != 1");
+
+      //Testing update
+      persona.setDireccion("michimalongo 1828");
+      if (! theRepo.update(persona)) {
+        Assertions.fail("No se actualizo la persona");
+      }
+
+      //Testing delete
+      if (! theRepo.delete(persona.getId())) {
+        Assertions.fail("No se elimino la persona");
+      }
+
+
+    }catch (IOException | SQLException e) {
+      throw new RuntimeException(e);
+    }
   }
 
 }
