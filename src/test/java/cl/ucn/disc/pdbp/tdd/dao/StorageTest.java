@@ -139,7 +139,7 @@ public final class StorageTest {
       Assertions.assertEquals(1, personasInsert.size(), "Size != 1");
 
       //Testing update
-      persona.setDireccion("michimalongo 1828");
+      persona.setDireccion("michimalongo 1234");
       if (! theRepo.update(persona)) {
         Assertions.fail("No se actualizo la persona");
       }

@@ -199,4 +199,12 @@ public class Persona {
   public String getEmail() {
     return email;
   }
+
+  /**
+   *
+   * @param direccion new direccion
+   */
+  public void setDireccion(String direccion) {
+    this.direccion = direccion;
+  }
 }
