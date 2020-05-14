@@ -33,6 +33,10 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * Capa de acceso a los datos.
+ * @author Miguel León Garrido.
+ */
 public class RepositoryOrmLite<T,K> implements Repository<T, K> {
 
   /**
