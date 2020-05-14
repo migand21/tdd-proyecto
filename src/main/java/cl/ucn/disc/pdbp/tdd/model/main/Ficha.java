@@ -35,7 +35,7 @@ import java.time.ZonedDateTime;
  *
  * @author Miguel León Garrido
  */
-@DatabaseTable(tableName = "fichas")
+@DatabaseTable(tableName = "ficha")
 public final class Ficha {
 
   /**

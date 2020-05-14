@@ -24,6 +24,10 @@
 
 package cl.ucn.disc.pdbp.tdd.model.main;
 
+import cl.ucn.disc.pdbp.tdd.model.dao.ZonedDateTimeType;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 import java.time.ZonedDateTime;
 
 /**
@@ -31,42 +35,63 @@ import java.time.ZonedDateTime;
  *
  * @author Miguel León Garrido
  */
+@DatabaseTable(tableName = "control")
 public class Control {
+
+  /**
+   * Id.
+   */
+  @DatabaseField(generatedId = true)
+  private Long id;
 
   /**
    * fecha del control.
    */
-  private final ZonedDateTime fecha;
+  @DatabaseField(persisterClass = ZonedDateTimeType.class)
+  private ZonedDateTime fecha;
 
   /**
    * fecha del proximo control.
    */
-  private final ZonedDateTime fechaProximoControl;
+  @DatabaseField(persisterClass = ZonedDateTimeType.class)
+  private ZonedDateTime fechaProximoControl;
 
   /**
    * temperatura del paciente en grados celcius.
    */
-  private final float temperatura;
+  @DatabaseField(canBeNull = false)
+  private float temperatura;
 
   /**
    * peso del paciente en kilos.
    */
-  private final float peso;
+  @DatabaseField(canBeNull = false)
+  private float peso;
 
   /**
    * altura del paciente en cm.
    */
-  private final float altura;
+  @DatabaseField(canBeNull = false)
+  private float altura;
 
   /**
    * diagnostico del paciente.
    */
-  private final String diagnostico;
+  @DatabaseField(canBeNull = false)
+  private String diagnostico;
 
   /**
    * nombre del veterinario que realizo el control.
    */
-  private final String nombreVeterinario;
+  @DatabaseField(canBeNull = false)
+  private String nombreVeterinario;
+
+  /**
+   * Empty Constructor.
+   */
+  Control() {
+    //nothing
+  }
 
   /**
    * The Constructor.
