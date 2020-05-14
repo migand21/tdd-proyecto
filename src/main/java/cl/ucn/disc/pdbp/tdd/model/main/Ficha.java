@@ -24,6 +24,10 @@
 
 package cl.ucn.disc.pdbp.tdd.model.main;
 
+import cl.ucn.disc.pdbp.tdd.model.dao.ZonedDateTimeType;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 import java.time.ZonedDateTime;
 
 /**
@@ -31,55 +35,77 @@ import java.time.ZonedDateTime;
  *
  * @author Miguel León Garrido
  */
+@DatabaseTable(tableName = "fichas")
 public final class Ficha {
+
+  /**
+   * ID.
+   */
+  @DatabaseField(generatedId = true)
+  private Long id;
 
   /**
    * Numero de ficha.
    */
-  private final long numero;
+  @DatabaseField(canBeNull = false, unique = true)
+  private long numero;
 
   /**
    * Nombre del paciente.
    */
-  private final String nombrePaciente;
+  @DatabaseField(canBeNull = false)
+  private String nombrePaciente;
 
   /**
    * Especie: ej. canino.
    */
-  private final String especie;
+  @DatabaseField(canBeNull = false)
+  private String especie;
 
   /**
    * fecha de nacimiento del animal.
    */
-  private final ZonedDateTime fechaNacimiento;
+  @DatabaseField(persisterClass = ZonedDateTimeType.class)
+  private ZonedDateTime fechaNacimiento;
 
   /**
    * raza del animal.
    */
-  private final String raza;
+  @DatabaseField(canBeNull = false)
+  private String raza;
 
   /**
    * sexo del animal.
    */
-  private final Sexo sexo;
+  @DatabaseField(canBeNull = false)
+  private Sexo sexo;
 
   /**
    * color del animal.
    */
-  private final String color;
+  @DatabaseField(canBeNull = false)
+  private String color;
 
   /**
    * tipo de paciente.
    */
-  private final Tipo tipo;
+  @DatabaseField(canBeNull = false)
+  private Tipo tipo;
+
+  /**
+   * Empty Constructor.
+   */
+  Ficha() {
+    // nothing here
+  }
 
   /**
    * The Constructor.
    *
-   * @param numero el numero del paciente
-   * @param nombrePaciente el nombre del paciente
-   * @param especie la especie del paciente
-   * @param fechaNacimiento fecha de nacimiento del paciente
+   * @param numero del paciente
+   * @param nombrePaciente del paciente
+   * @param especie del paciente
+   * @param fechaNacimiento del paciente
    * @param raza raza del paciente
    * @param sexo sexo del paciente
    * @param color color del paciente
