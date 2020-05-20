@@ -25,7 +25,9 @@
 package cl.ucn.disc.pdbp.tdd.model.main;
 
 import cl.ucn.disc.pdbp.tdd.model.utils.Validation;
+import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 /**
@@ -83,6 +85,12 @@ public class Persona {
    */
   @DatabaseField(canBeNull = false)
   private String email;
+
+  /**
+   * fichas que tiene esta persona
+   */
+  @ForeignCollectionField(eager = false)
+  private ForeignCollection<Ficha> fichas;
 
   /**
    * Empty Constructor.
@@ -247,6 +255,14 @@ public class Persona {
    */
   public void setEmail(String email) {
     this.email = email;
+  }
+
+  /**
+   *
+   * @return la lista de fichas que posee esta persona
+   */
+  public ForeignCollection<Ficha> getFichas() {
+    return fichas;
   }
 }
 

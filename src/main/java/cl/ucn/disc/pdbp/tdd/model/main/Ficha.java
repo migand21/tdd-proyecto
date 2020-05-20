@@ -25,7 +25,9 @@
 package cl.ucn.disc.pdbp.tdd.model.main;
 
 import cl.ucn.disc.pdbp.tdd.model.dao.ZonedDateTimeType;
+import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.time.ZonedDateTime;
@@ -97,6 +99,12 @@ public final class Ficha {
    */
   @DatabaseField(foreign = true, canBeNull = false, foreignAutoRefresh = true)
   private Persona duenio;
+
+  /**
+   * controles pertenecientes a esta ficha
+   */
+  @ForeignCollectionField(eager = false)
+  private ForeignCollection<Control> controles;
 
   /**
    * Empty Constructor.
@@ -209,5 +217,13 @@ public final class Ficha {
    */
   public Long getId() {
     return this.id;
+  }
+
+  /**
+   *
+   * @return los controles pertenecientes a esta ficha
+   */
+  public ForeignCollection<Control> getControles() {
+    return controles;
   }
 }

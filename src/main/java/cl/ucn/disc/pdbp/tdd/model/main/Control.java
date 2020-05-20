@@ -179,5 +179,13 @@ public class Control {
     return ficha;
   }
 
+  /**
+   *
+   * @return The Id.
+   */
+  public Long getId() {
+    return id;
+  }
+
 
 }
