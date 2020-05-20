@@ -116,6 +116,7 @@ public final class Ficha {
    * @param sexo sexo del paciente
    * @param color color del paciente
    * @param tipo tipo del paciente
+   * @param duenio del paciente
    */
   public Ficha(long numero, String nombrePaciente, String especie, ZonedDateTime fechaNacimiento, String raza,
                Sexo sexo, String color, Tipo tipo, Persona duenio) {

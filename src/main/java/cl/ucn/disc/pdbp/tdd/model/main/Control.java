@@ -87,6 +87,12 @@ public class Control {
   private String nombreVeterinario;
 
   /**
+   * ficha a la cual pertenece este control.
+   */
+  @DatabaseField(foreign = true, canBeNull = false, foreignAutoRefresh = true)
+  private Ficha ficha;
+
+  /**
    * Empty Constructor.
    */
   Control() {
@@ -103,9 +109,10 @@ public class Control {
    * @param altura altura del paciente
    * @param diagnostico diagnostico del paciente
    * @param nombreVeterinario nombre del veterinario que atendió al paciente
+   * @param ficha a la cual pertenece este control
    */
   public Control(ZonedDateTime fecha, ZonedDateTime fechaProximoControl, float temperatura, float peso, float altura,
-                 String diagnostico, String nombreVeterinario) {
+                 String diagnostico, String nombreVeterinario, Ficha ficha) {
     this.fecha = fecha;
     this.fechaProximoControl = fechaProximoControl;
     this.temperatura = temperatura;
@@ -113,6 +120,7 @@ public class Control {
     this.altura = altura;
     this.diagnostico = diagnostico;
     this.nombreVeterinario = nombreVeterinario;
+    this.ficha = ficha;
   }
 
   /** Getter.
@@ -163,5 +171,13 @@ public class Control {
   public String getNombreVeterinario() {
     return nombreVeterinario;
   }
+
+  /** Getter.
+   * @return ficha a la que pertenece el control
+   */
+  public Ficha getFicha() {
+    return ficha;
+  }
+
 
 }
