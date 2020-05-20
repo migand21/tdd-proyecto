@@ -122,7 +122,35 @@ public class ContratosImpl implements Contratos {
    */
   @Override
   public Persona registrarPersona(Persona persona) {
-    throw new NotImplementedException();
+
+    // Nullity
+    if(persona == null) {
+      throw new IllegalArgumentException("persona is null!!");
+    }
+
+    // Validate if the person already exists
+    try {
+
+      // Make a query to check if a person with the same rut exists
+      QueryBuilder<Persona, Long> queryPersonaRut = this.repoPersona.getQuery();
+      queryPersonaRut.where()
+                      .like("rut",persona.getRut());
+
+      // if exists, throws an error
+      if(queryPersonaRut.countOf() > 0)
+        throw new RuntimeException("The person already exists");
+
+    } catch (SQLException throwables) {
+      throwables.printStackTrace();
+    }
+
+    // Inserting the person in the DataBase
+    if(this.repoPersona.create(persona)) {
+      return persona;
+    }
+
+    //The person wasn't inserted
+    throw new RuntimeException("The person couldn't be inserted");
   }
 
   /**
