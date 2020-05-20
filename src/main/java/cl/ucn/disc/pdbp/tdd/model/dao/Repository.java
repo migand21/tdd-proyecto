@@ -24,6 +24,8 @@
 
 package cl.ucn.disc.pdbp.tdd.model.dao;
 
+import com.j256.ormlite.stmt.QueryBuilder;
+
 import java.util.List;
 
 /**
@@ -65,4 +67,18 @@ public interface Repository<T, K> {
    * @return true
    */
   boolean delete(K id);
+
+  /**
+   *
+   * @param key to filter
+   * @param value to search
+   * @return the List of T
+   */
+  List<T> findAll(String key, Object value);
+
+  /**
+   *
+   * @return the QueryBuilder
+   */
+  QueryBuilder<T, K> getQuery();
 }
