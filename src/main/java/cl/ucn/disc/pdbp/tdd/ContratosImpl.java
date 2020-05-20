@@ -40,6 +40,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class ContratosImpl implements Contratos {
@@ -100,6 +101,7 @@ public class ContratosImpl implements Contratos {
     }
   }
 
+  //TODO: Implementar estos 2 metodos.
 
   /**
    * Contrato 01.
@@ -143,18 +145,18 @@ public class ContratosImpl implements Contratos {
       // Find by Number
       if (StringUtils.isNumeric(query)) {
 
-        // 1. Add All the fichas with the given number
+        // 1. The fichas with the given number
         fichas.addAll(this.repoFicha.findAll("numero",query));
-
-        // 3. Fing by rut of Duenio
-        QueryBuilder<Persona, Long> queryPersona = this.repoPersona.getQuery();
-        queryPersona.where().like("rut","%"+query+"%");
-
-        fichas.addAll(this.repoFicha
-                      .getQuery()
-                      .join(queryPersona)
-                      .query());
       }
+
+      // 3. Fing by rut of Duenio
+      QueryBuilder<Persona, Long> queryPersonaRut = this.repoPersona.getQuery();
+      queryPersonaRut.where().like("rut","%"+query+"%");
+
+      fichas.addAll(this.repoFicha
+        .getQuery()
+        .join(queryPersonaRut)
+        .query());
 
       // 2. Find by name of Paciente
       fichas.addAll(this.repoFicha
@@ -164,13 +166,13 @@ public class ContratosImpl implements Contratos {
                     .query());
 
       // 4. Find by name of duenio
-      QueryBuilder<Persona, Long> queryPersona = this.repoPersona.getQuery();
-      queryPersona.where().like("nombre","%"+query+"%");
+      QueryBuilder<Persona, Long> queryPersonaNombre = this.repoPersona.getQuery();
+      queryPersonaNombre.where().like("nombre","%"+query+"%");
 
       // run the join
       fichas.addAll(this.repoFicha
                     .getQuery()
-                    .join(queryPersona)
+                    .join(queryPersonaNombre)
                     .query());
 
 
@@ -178,7 +180,9 @@ public class ContratosImpl implements Contratos {
       throwables.printStackTrace();
     }
 
+    // Eliminacion de fichas repetidas.
+    List<Ficha> fichasNoRepeat = new ArrayList<>(new HashSet<>(fichas));
 
-    return fichas;
+    return fichasNoRepeat;
   }
 }
