@@ -24,40 +24,66 @@
 
 package cl.ucn.disc.pdbp.tdd;
 
-import cl.ucn.disc.pdbp.tdd.model.main.Ficha;
 import cl.ucn.disc.pdbp.tdd.model.main.Persona;
-
-import java.util.List;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * The List of Contratos
+ * The Model
  *
- * @author Miguel Leon Garrido
+ * @author Miguel León Garrido
  */
-public interface Contratos {
+public final class TestContratosImpl {
 
   /**
-   * Contrato 01 : Registrar Paciente(Mascota).
-   *
-   * @param ficha to save.
-   * @return the {@link Ficha} saved.
+   * The Logger (console)
    */
-  Ficha registrarPaciente(Ficha ficha);
+  private static final Logger log = LoggerFactory.getLogger(TestContratosImpl.class);
 
   /**
-   * Contrato 02 : Registrar Persona.
-   *
-   * @param persona to save.
-   * @return the {@link Persona} saved.
+   * Testing the contrato 01
    */
-  Persona registrarPersona(Persona persona);
+  @Test
+  public void testContrato1(){
+
+    ContratosImpl testContratos = new ContratosImpl("jdbc:h2:mem:account");
+
+
+
+  }
 
   /**
-   * Contrato 03 : Buscar Fichas con filtro.
-   *
-   * @param query to search.
-   * @return the {@link List} of {@link Ficha}
+   * Testing the contrato 02
    */
-  List<Ficha> buscarFicha(String query);
+  @Test
+  public void testContrato2(){
+
+    ContratosImpl testContratos = new ContratosImpl("jdbc:h2:mem:account");
+
+    Persona persona1 = new Persona("Andrea", "Contreras", "152532873", "michimalongo 1826",
+      2244397, 63887303, "asd123@gmail.com");
+
+    //Inserting a null person
+    Assertions.assertThrows(IllegalArgumentException.class, () -> testContratos.registrarPersona(null));
+
+    //Inserting a person
+    testContratos.registrarPersona(persona1);
+
+    //Inserting the same person
+    Assertions.assertThrows(RuntimeException.class, () -> testContratos.registrarPersona(persona1));
+
+  }
+
+  /**
+   * Testing the contrato 03
+   */
+  @Test
+  public void testContrato3(){
+
+    ContratosImpl testContratos = new ContratosImpl("jdbc:h2:mem:account");
+
+  }
 
 }

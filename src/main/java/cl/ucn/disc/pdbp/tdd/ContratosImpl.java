@@ -43,6 +43,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+/**
+ * The Model
+ *
+ * @author Miguel León Garrido
+ */
 public class ContratosImpl implements Contratos {
 
   /**
@@ -110,7 +115,7 @@ public class ContratosImpl implements Contratos {
    * @return the {@link Ficha} saved.
    */
   @Override
-  public Ficha registraPaciente(Ficha ficha) {
+  public Ficha registrarPaciente(Ficha ficha) {
     throw new NotImplementedException();
   }
 
