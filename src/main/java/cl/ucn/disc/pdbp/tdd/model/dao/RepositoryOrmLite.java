@@ -77,6 +77,8 @@ public class RepositoryOrmLite<T,K> implements Repository<T, K> {
    */
   @Override
   public T findById(K id) {
+    if(id == null)
+      throw new RuntimeException();
     try {
       return theDao.queryForId(id);
     } catch(SQLException throwables) {
@@ -90,6 +92,8 @@ public class RepositoryOrmLite<T,K> implements Repository<T, K> {
    */
   @Override
   public boolean create(T t) {
+    if(t == null)
+      throw new RuntimeException();
     try {
       return theDao.create(t) == 1;
     } catch(SQLException throwables) {
@@ -104,7 +108,8 @@ public class RepositoryOrmLite<T,K> implements Repository<T, K> {
    */
   @Override
   public boolean update(T t) {
-
+    if(t == null)
+      throw new RuntimeException();
     try {
       return theDao.update(t) == 1;
     } catch(SQLException throwables) {
@@ -118,6 +123,8 @@ public class RepositoryOrmLite<T,K> implements Repository<T, K> {
    */
   @Override
   public boolean delete(K id) {
+    if(id == null)
+      throw new RuntimeException();
     try {
       return theDao.deleteById(id) == 1;
     } catch(SQLException throwables) {
