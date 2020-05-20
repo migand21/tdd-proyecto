@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package cl.ucn.disc.pdpb.tdd;
+package cl.ucn.disc.pdbp.tdd;
 
 import cl.ucn.disc.pdbp.tdd.model.main.Ficha;
 import cl.ucn.disc.pdbp.tdd.model.main.Persona;
