@@ -44,7 +44,7 @@ import java.util.HashSet;
 import java.util.List;
 
 /**
- * The Model
+ * Implementation of Contratos
  *
  * @author Miguel León Garrido
  */

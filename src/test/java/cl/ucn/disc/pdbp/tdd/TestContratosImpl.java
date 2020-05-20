@@ -31,7 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The Model
+ * Class for testing Contratos
  *
  * @author Miguel León Garrido
  */
