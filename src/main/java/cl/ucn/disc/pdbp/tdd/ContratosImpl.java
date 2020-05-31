@@ -29,6 +29,7 @@ import cl.ucn.disc.pdbp.tdd.model.dao.RepositoryOrmLite;
 import cl.ucn.disc.pdbp.tdd.model.main.Control;
 import cl.ucn.disc.pdbp.tdd.model.main.Ficha;
 import cl.ucn.disc.pdbp.tdd.model.main.Persona;
+import cl.ucn.disc.pdbp.tdd.model.utils.Entity;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
@@ -39,9 +40,8 @@ import org.slf4j.LoggerFactory;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Implementation of Contratos
@@ -106,8 +106,6 @@ public class ContratosImpl implements Contratos {
     }
   }
 
-  //TODO: Implementar estos 2 metodos.
-
   /**
    * Contrato 01.
    *
@@ -116,7 +114,35 @@ public class ContratosImpl implements Contratos {
    */
   @Override
   public Ficha registrarPaciente(Ficha ficha) {
-    throw new NotImplementedException();
+    // Nullity
+    if(ficha == null) {
+      throw new IllegalArgumentException("ficha is null!!");
+    }
+
+    // Validate if the ficha already exists
+    try {
+
+      // Make a query to check if a ficha with the same numero exists
+      QueryBuilder<Ficha, Long> queryFichaNumero = this.repoFicha.getQuery();
+      queryFichaNumero.where()
+        .like("numero",ficha.getNumero());
+
+      // if exists, throws an error
+      if(queryFichaNumero.countOf() > 0)
+        throw new RuntimeException("The ficha already exists");
+
+    } catch (SQLException throwables) {
+      throwables.printStackTrace();
+    }
+
+    // Inserting the ficha in the DataBase
+    if(this.repoFicha.create(ficha)) {
+      return ficha;
+    }
+
+    //The ficha wasn't inserted
+    throw new RuntimeException("The ficha couldn't be inserted");
+
   }
 
   /**
@@ -214,7 +240,11 @@ public class ContratosImpl implements Contratos {
     }
 
     // Eliminacion de fichas repetidas.
-    List<Ficha> fichasNoRepeat = new ArrayList<>(new HashSet<>(fichas));
+    List<Ficha> fichasNoRepeat = new ArrayList<>(
+      fichas.stream().collect(
+        Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(Ficha::getId)))
+      )
+    );
 
     return fichasNoRepeat;
   }
