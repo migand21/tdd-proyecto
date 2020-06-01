@@ -26,6 +26,7 @@ package cl.ucn.disc.pdbp.tdd;
 
 import cl.ucn.disc.pdbp.tdd.model.main.Ficha;
 import io.javalin.http.Context;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,15 +54,80 @@ public class ApiRestEndpoints {
   }
 
   /**
+   * Getting all the fichas.
+   *
    * @param ctx the Javalin {@link Context}
    */
   public static void getAllFichas(Context ctx) {
 
     log.debug("Getting all the fichas...");
+
+    // Getting all the fichas
     List<Ficha> fichas = CONTRATOS.getAllFichas();
     ctx.json(fichas);
-
   }
 
+  /**
+   * Finding a ficha with a query.
+   *
+   * @param ctx the Javalin {@link Context}
+   */
+  public static void findFichas(Context ctx) {
 
+    // Getting the query sended
+    String query = ctx.pathParam("query");
+    log.debug("finding fichas with query <{}> ..",query);
+
+    // Finding the fichas with the query
+    List<Ficha> fichas = CONTRATOS.buscarFicha(query);
+    ctx.json(fichas);
+  }
+
+  /**
+   * Inserting a ficha in the DB.
+   *
+   * @param ctx the Javalin {@link Context}
+   */
+  public static void insertFicha( Context ctx) {
+  }
+
+  /**
+   * finding the controles in the DB.
+   *
+   * @param ctx the Javalin {@link Context}
+   */
+  public static void getAllControles(Context ctx) {
+  }
+
+  /**
+   * Inserting a control in the DB.
+   *
+   * @param ctx the Javalin {@link Context}
+   */
+  public static void insertControl(Context ctx) {
+  }
+
+  /**
+   * Getting all the personas in the DB.
+   *
+   * @param ctx the Javalin {@link Context}
+   */
+  public static void getAllPersonas(Context ctx) {
+  }
+
+  /**
+   * Inserting a persona in the DB.
+   *
+   * @param ctx the Javalin {@link Context}
+   */
+  public static void insertPersona( Context ctx) {
+  }
+
+  /**
+   * getting a duenio from the DB.
+   *
+   * @param ctx the Javalin {@link Context}
+   */
+  public static void getPersona( Context ctx) {
+  }
 }

@@ -24,10 +24,10 @@
 
 package cl.ucn.disc.pdbp.tdd;
 
-import cl.ucn.disc.pdbp.tdd.model.main.Persona;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import io.javalin.Javalin;
+import io.javalin.apibuilder.ApiBuilder;
 import io.javalin.core.util.RouteOverviewPlugin;
 import io.javalin.plugin.json.JavalinJson;
 import org.slf4j.Logger;
@@ -82,8 +82,65 @@ public final class Application {
       // Enable routes helper
       config.registerPlugin(new RouteOverviewPlugin("/routes"));
 
-    }).start(7000);
+    }).routes(() -> {
 
+      // Version
+      ApiBuilder.path("v1", () -> {
+
+        // fichas path
+        ApiBuilder.path("fichas", () -> {
+
+          // GET -> /fichas
+          ApiBuilder.get(ApiRestEndpoints::getAllFichas);
+
+          // POST -> /fichas
+          ApiBuilder.post(ApiRestEndpoints::insertFicha);
+
+          // GET -> /fichas/find/{query}
+          ApiBuilder.path("find/:query", () -> {
+            ApiBuilder.get(ApiRestEndpoints::findFichas);
+          });
+
+          // ROUTE -> /fichas/{numeroFicha}
+          ApiBuilder.path(":numeroFicha", () -> {
+
+            // ROUTE -> /fichas/{numeroFicha}/controles
+            ApiBuilder.path("controles", () -> {
+
+              // GET -> /fichas/{numeroFicha}/controles
+              ApiBuilder.get(ApiRestEndpoints::getAllControles);
+
+              // POST -> /fichas/{numeroFicha}/controles
+              ApiBuilder.post(ApiRestEndpoints::insertControl);
+
+            });
+
+            // ROUTE -> /fichas/{numeroFicha}/persona
+            ApiBuilder.path("persona", () -> {
+
+              // GET -> /fichas/{numeroFicha}/persona
+              ApiBuilder.get(ApiRestEndpoints::getPersona);
+
+            });
+
+          });
+
+        });
+
+        // personas path
+        ApiBuilder.path("personas", () -> {
+
+          // GET -> /personas
+          ApiBuilder.get(ApiRestEndpoints::getAllPersonas);
+
+          // POST -> /personas
+          ApiBuilder.post(ApiRestEndpoints::insertPersona);
+
+        });
+
+      });
+
+    }).start(7000);
 
     // A simple route to show time
     javalin.get("/", ctx -> {
@@ -92,21 +149,6 @@ public final class Application {
       ctx.result("The Date: " + ZonedDateTime.now());
     });
 
-    //testing a persona get with json
-    javalin.get("/test", ctx -> {
-
-      String nombre = "Andrea";
-      String apellido = "Contreras";
-      String rut = "152532873";
-      String direccion = "michimalongo 1826";
-      Integer telefonoFijo = 2244397;
-      Integer telefonoMovil = 63227303;
-      String email = "probando@alumnos.ucn.cl";
-
-      Persona persona = new Persona(nombre, apellido, rut,direccion,telefonoFijo,telefonoMovil,email);
-
-      ctx.json(persona);
-    });
 
 
 
