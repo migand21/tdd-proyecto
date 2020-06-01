@@ -108,7 +108,7 @@ public final class Application {
             ApiBuilder.path("controles", () -> {
 
               // GET -> /fichas/{numeroFicha}/controles
-              ApiBuilder.get(ApiRestEndpoints::getAllControles);
+              ApiBuilder.get(ApiRestEndpoints::getAllTheControlesFromFicha);
 
               // POST -> /fichas/{numeroFicha}/controles
               ApiBuilder.post(ApiRestEndpoints::insertControl);
@@ -119,7 +119,7 @@ public final class Application {
             ApiBuilder.path("persona", () -> {
 
               // GET -> /fichas/{numeroFicha}/persona
-              ApiBuilder.get(ApiRestEndpoints::getPersona);
+              ApiBuilder.get(ApiRestEndpoints::getPersonaFromFicha);
 
             });
 
@@ -138,6 +138,13 @@ public final class Application {
 
         });
 
+        // ROUTE -> personas?pageSize={size}&page={number}
+        ApiBuilder.path("personas?pageSize=:size&page=:number", () -> {
+
+          ApiBuilder.get(ApiRestEndpoints::getAllPersonasWithQuery);
+
+        });
+
       });
 
     }).start(7000);
@@ -149,10 +156,6 @@ public final class Application {
       ctx.result("The Date: " + ZonedDateTime.now());
     });
 
-
-
-
   }
-
 
 }
