@@ -24,12 +24,13 @@
 
 package cl.ucn.disc.pdbp.tdd;
 
-import cl.ucn.disc.pdbp.tdd.model.main.Ficha;
+import cl.ucn.disc.pdbp.tdd.model.main.*;
 import io.javalin.http.Context;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 /**
@@ -64,6 +65,7 @@ public class ApiRestEndpoints {
 
     // Getting all the fichas
     List<Ficha> fichas = CONTRATOS.getAllFichas();
+
     ctx.json(fichas);
   }
 
@@ -80,6 +82,7 @@ public class ApiRestEndpoints {
 
     // Finding the fichas with the query
     List<Ficha> fichas = CONTRATOS.buscarFicha(query);
+
     ctx.json(fichas);
   }
 
@@ -89,14 +92,54 @@ public class ApiRestEndpoints {
    * @param ctx the Javalin {@link Context}
    */
   public static void insertFicha( Context ctx) {
+
+    // Obtaining all the data
+    Long numero = Long.parseLong(ctx.formParam("numero"));
+    String nombrePaciente = ctx.formParam("nombrePaciente");
+    String especie = ctx.formParam("especie");
+    String raza = ctx.formParam("raza");
+    Sexo sexo;
+
+    if(ctx.formParam("sexo").equalsIgnoreCase("hembra")) {
+      sexo = Sexo.HEMBRA;
+    } else {
+      sexo = Sexo.MACHO;
+    }
+    String color = ctx.formParam("color");
+
+    Tipo tipo;
+    if(ctx.formParam("tipo").equalsIgnoreCase("interno")) {
+      tipo = Tipo.INTERNO;
+    } else {
+      tipo = Tipo.EXTERNO;
+    }
+
+    // We need the duenio as a Persona to create a ficha
+    Long idDuenio = Long.parseLong(ctx.formParam("duenio"));
+    Persona duenio = CONTRATOS.getPersona(idDuenio);
+
+    // Creating and inserting the ficha
+    Ficha ficha = new Ficha(numero,nombrePaciente,especie,ZonedDateTime.now(),raza,sexo,color,tipo,duenio);
+
+    CONTRATOS.registrarPaciente(ficha);
+
   }
 
   /**
-   * finding the controles in the DB.
+   * finding the controles of the ficha in the DB.
    *
    * @param ctx the Javalin {@link Context}
    */
-  public static void getAllControles(Context ctx) {
+  public static void getAllTheControlesFromFicha(Context ctx) {
+
+    // Getting the numeroFicha of control
+    Long numero = Long.parseLong(ctx.pathParam("numeroFicha"));
+
+    // Finding the controles
+    List<Control> controles = CONTRATOS.getAllControlesFromFicha(numero);
+
+    ctx.json(controles);
+
   }
 
   /**
@@ -105,6 +148,17 @@ public class ApiRestEndpoints {
    * @param ctx the Javalin {@link Context}
    */
   public static void insertControl(Context ctx) {
+
+    float temperatura = Float.parseFloat(ctx.formParam("temperatura"));
+    float peso = Float.parseFloat(ctx.formParam("peso"));
+    float altura = Float.parseFloat(ctx.formParam("altura"));
+
+    String diagnostico = ctx.formParam("diagnostico");
+    String nombreVeterinario = ctx.formParam("nombreVeterinario");
+
+    Long idFicha = Long.parseLong(ctx.formParam("idFicha"));
+    Ficha ficha = CONTRATOS.getFicha(idFicha);
+
   }
 
   /**
@@ -113,6 +167,11 @@ public class ApiRestEndpoints {
    * @param ctx the Javalin {@link Context}
    */
   public static void getAllPersonas(Context ctx) {
+
+    log.debug("Getting all the personas...");
+
+    List<Persona> personas = CONTRATOS.getAllPersonas();
+    ctx.json(personas);
   }
 
   /**
@@ -121,6 +180,21 @@ public class ApiRestEndpoints {
    * @param ctx the Javalin {@link Context}
    */
   public static void insertPersona( Context ctx) {
+
+    // Obtaining the data
+    String nombre = ctx.formParam("nombre");
+    String apellido = ctx.formParam("nombre");
+    String rut = ctx.formParam("nombre");
+    String direccion = ctx.formParam("nombre");
+    Integer telefonoFijo = Integer.parseInt(ctx.formParam("telefonoFijo"));
+    Integer telefonoMovil = Integer.parseInt(ctx.formParam("telefonoMovil"));
+    String email = ctx.formParam("nombre");
+
+    // Creating and inserting the persona
+    Persona persona = new Persona(nombre,apellido,rut,direccion,telefonoFijo,telefonoMovil,email);
+
+    CONTRATOS.registrarPersona(persona);
+
   }
 
   /**
@@ -128,6 +202,33 @@ public class ApiRestEndpoints {
    *
    * @param ctx the Javalin {@link Context}
    */
-  public static void getPersona( Context ctx) {
+  public static void getPersonaFromFicha(Context ctx) {
+
+    // Getting the numeroFicha of control
+    Long numero = Long.parseLong(ctx.pathParam("numeroFicha"));
+
+    // Finding the duenio
+    Persona duenio = CONTRATOS.getPersonaFromFicha(numero);
+
+    ctx.json(duenio);
+
+  }
+
+  /**
+   * getting a list of personas with some filter.
+   *
+   * @param ctx the Javalin {@link Context}
+   */
+  public static void getAllPersonasWithQuery(Context ctx) {
+
+    // Obtaining the data of the query
+    Integer pageSize = ctx.queryParam("pageSize",Integer.class).get();
+    Integer page = ctx.queryParam("page",Integer.class).get();
+
+    // Finding the personas
+    List<Persona> personas = CONTRATOS.getPersonas(pageSize,page);
+
+    ctx.json(personas);
+
   }
 }
