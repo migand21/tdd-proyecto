@@ -24,6 +24,7 @@
 
 package cl.ucn.disc.pdbp.tdd;
 
+import cl.ucn.disc.pdbp.tdd.model.main.Control;
 import cl.ucn.disc.pdbp.tdd.model.main.Ficha;
 import cl.ucn.disc.pdbp.tdd.model.main.Persona;
 
@@ -60,5 +61,51 @@ public interface Contratos {
    */
   List<Ficha> buscarFicha(String query);
 
+  /**
+   *
+   * @return all the fichas
+   */
   List<Ficha> getAllFichas();
+
+  /**
+   *
+   * @return all the personas
+   */
+  List<Persona> getAllPersonas();
+
+  /**
+   *
+   * @param numero de la ficha
+   * @return the duenio of ficha
+   */
+  List<Control> getAllControlesFromFicha(Long numero);
+
+  /**
+   *
+   * @param idDuenio to find
+   * @return the persona
+   */
+  Persona getPersona(Long idDuenio);
+
+  /**
+   *
+   * @param numero of ficha
+   * @return the duenio of this ficha
+   */
+  Persona getPersonaFromFicha(Long numero);
+
+  /**
+   *
+   * @param idFicha to find
+   * @return the ficha
+   */
+  Ficha getFicha(Long idFicha);
+
+  /**
+   *
+   * @param pageSize , amount of personas
+   * @param page , index of the list
+   * @return the {@link List} of {@link Persona}
+   */
+  List<Persona> getPersonas(Integer pageSize, Integer page);
 }

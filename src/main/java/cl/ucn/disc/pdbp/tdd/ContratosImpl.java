@@ -251,10 +251,105 @@ public class ContratosImpl implements Contratos {
 
   /**
    *
-   * @return the {@link List} of all {@link Ficha}
+   * @return all the fichas
    */
   @Override
   public List<Ficha> getAllFichas() {
     return repoFicha.findAll();
+  }
+
+  /**
+   *
+   * @return all the personas
+   */
+  @Override
+  public List<Persona> getAllPersonas() {
+    return repoPersona.findAll();
+  }
+
+  /**
+   *
+   * @param numero de la ficha
+   * @return the duenio of ficha
+   */
+  @Override
+  public List<Control> getAllControlesFromFicha(Long numero) {
+
+    //Finding the ficha
+    List<Ficha> fichas = repoFicha.findAll("numero",Long.toString(numero));
+
+    //Ficha index should be 0(only one)
+    return new ArrayList<>(fichas.get(0).getControles());
+  }
+
+  /**
+   *
+   * @param idDuenio to find
+   * @return the persona
+   */
+  @Override
+  public Persona getPersona(Long idDuenio) {
+    return repoPersona.findById(idDuenio);
+  }
+
+  /**
+   *
+   * @param numero of ficha
+   * @return the duenio of this ficha
+   */
+  @Override
+  public Persona getPersonaFromFicha(Long numero) {
+
+    //Finding the ficha
+    List<Ficha> fichas = repoFicha.findAll("numero",Long.toString(numero));
+
+    //Ficha index should be 0(only one), so we return the duenio
+    return fichas.get(0).getDuenio();
+  }
+
+  /**
+   * @param idFicha to find
+   * @return the ficha
+   */
+  @Override
+  public Ficha getFicha(Long idFicha) {
+    return repoFicha.findById(idFicha);
+  }
+
+  /**
+   * @param pageSize , amount of personas
+   * @param page     , index of the list
+   * @return the {@link List} of {@link Persona}
+   */
+  @Override
+  public List<Persona> getPersonas(Integer pageSize, Integer page) {
+
+    // Finding all the personas
+    List<Persona> personas = repoPersona.findAll();
+
+    // The paginated list
+    List<Persona> personasIndex = new ArrayList<>();
+
+    // TODO: no entendi bien lo de indice page, asique puede cambiar esto despues
+
+    // if there are not more personas in this page
+    if(personas.size() < page) {
+      return null;
+    } else {
+
+      // We add the personas to the paginated list
+      for(int i = page; i < page + pageSize; i++){
+
+        // check if there are more personas
+        if(i == personas.size())
+          break;
+
+        personasIndex.add(personas.get(i));
+
+      }
+
+    }
+
+    return personasIndex;
   }
 }
