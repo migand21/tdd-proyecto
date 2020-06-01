@@ -97,6 +97,7 @@ public class ApiRestEndpoints {
     Long numero = Long.parseLong(ctx.formParam("numero"));
     String nombrePaciente = ctx.formParam("nombrePaciente");
     String especie = ctx.formParam("especie");
+    ZonedDateTime fechaNacimiento = ZonedDateTime.parse(ctx.formParam("fechaNacimiento"));
     String raza = ctx.formParam("raza");
     Sexo sexo;
 
@@ -115,11 +116,12 @@ public class ApiRestEndpoints {
     }
 
     // We need the duenio as a Persona to create a ficha
+    // TODO: aqui asumi que viene con el id del duenio como dato
     Long idDuenio = Long.parseLong(ctx.formParam("duenio"));
     Persona duenio = CONTRATOS.getPersona(idDuenio);
 
     // Creating and inserting the ficha
-    Ficha ficha = new Ficha(numero,nombrePaciente,especie,ZonedDateTime.now(),raza,sexo,color,tipo,duenio);
+    Ficha ficha = new Ficha(numero,nombrePaciente,especie,fechaNacimiento,raza,sexo,color,tipo,duenio);
 
     CONTRATOS.registrarPaciente(ficha);
 
@@ -149,6 +151,9 @@ public class ApiRestEndpoints {
    */
   public static void insertControl(Context ctx) {
 
+    // Obtaining the data
+    ZonedDateTime fecha= ZonedDateTime.parse(ctx.formParam("fecha"));
+    ZonedDateTime fechaProximoControl = ZonedDateTime.parse(ctx.formParam("fechaProximoControl"));
     float temperatura = Float.parseFloat(ctx.formParam("temperatura"));
     float peso = Float.parseFloat(ctx.formParam("peso"));
     float altura = Float.parseFloat(ctx.formParam("altura"));
@@ -156,8 +161,15 @@ public class ApiRestEndpoints {
     String diagnostico = ctx.formParam("diagnostico");
     String nombreVeterinario = ctx.formParam("nombreVeterinario");
 
+    // We need the ficha to create a control
+    // TODO: aqui asumi que viene con el id de la ficha como dato
     Long idFicha = Long.parseLong(ctx.formParam("idFicha"));
     Ficha ficha = CONTRATOS.getFicha(idFicha);
+
+    // creating and inserting the control in the DB.
+    Control control = new Control(fecha,fechaProximoControl,temperatura,peso,altura,diagnostico,nombreVeterinario,ficha);
+
+    CONTRATOS.registrarControl(control);
 
   }
 

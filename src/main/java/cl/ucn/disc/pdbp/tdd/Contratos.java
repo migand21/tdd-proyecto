@@ -108,4 +108,10 @@ public interface Contratos {
    * @return the {@link List} of {@link Persona}
    */
   List<Persona> getPersonas(Integer pageSize, Integer page);
+
+  /**
+   *
+   * @param control to insert
+   */
+  Control registrarControl(Control control);
 }

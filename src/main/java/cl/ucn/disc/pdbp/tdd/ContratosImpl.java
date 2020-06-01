@@ -352,4 +352,25 @@ public class ContratosImpl implements Contratos {
 
     return personasIndex;
   }
+
+  /**
+   * @param control to insert
+   */
+  @Override
+  public Control registrarControl(Control control) {
+
+    // Nullity
+    if(control == null) {
+      throw new IllegalArgumentException("control is null!!");
+    }
+
+    // Inserting the control in the DataBase
+    if(this.repoControl.create(control)) {
+      return control;
+    }
+
+    //The control wasn't inserted
+    throw new RuntimeException("The ficha couldn't be inserted");
+
+  }
 }
