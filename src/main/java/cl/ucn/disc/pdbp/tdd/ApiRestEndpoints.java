@@ -116,7 +116,7 @@ public class ApiRestEndpoints {
     }
 
     // We need the duenio as a Persona to create a ficha
-    // TODO: aqui asumi que viene con el id del duenio como dato
+    // TODO: aqui asumi que viene con el id del duenio como dato, y que las fechas vienen en el formato necesario
     Long idDuenio = Long.parseLong(ctx.formParam("duenio"));
     Persona duenio = CONTRATOS.getPersona(idDuenio);
 
@@ -162,7 +162,7 @@ public class ApiRestEndpoints {
     String nombreVeterinario = ctx.formParam("nombreVeterinario");
 
     // We need the ficha to create a control
-    // TODO: aqui asumi que viene con el id de la ficha como dato
+    // TODO: aqui asumi que viene con el id de la ficha como dato, y que las fechas vienen en el formato necesario
     Long idFicha = Long.parseLong(ctx.formParam("idFicha"));
     Ficha ficha = CONTRATOS.getFicha(idFicha);
 
