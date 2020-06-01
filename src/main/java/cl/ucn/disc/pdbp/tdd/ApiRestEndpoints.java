@@ -25,40 +25,43 @@
 package cl.ucn.disc.pdbp.tdd;
 
 import cl.ucn.disc.pdbp.tdd.model.main.Ficha;
-import cl.ucn.disc.pdbp.tdd.model.main.Persona;
+import io.javalin.http.Context;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 /**
- * The List of Contratos
+ * ApiRestEndpoint class.
  *
- * @author Miguel Leon Garrido
+ * @author Miguel Leon Garrido.
  */
-public interface Contratos {
+public class ApiRestEndpoints {
 
   /**
-   * Contrato 01 : Registrar Paciente(Mascota).
-   *
-   * @param ficha to save.
-   * @return the {@link Ficha} saved.
+   * The Logger.
    */
-  Ficha registrarPaciente(Ficha ficha);
+  private static final Logger log = LoggerFactory.getLogger(ApiRestEndpoints.class);
 
   /**
-   * Contrato 02 : Registrar Persona.
-   *
-   * @param persona to save.
-   * @return the {@link Persona} saved.
+   * The contratos instance.
    */
-  Persona registrarPersona(Persona persona);
+  private static final Contratos CONTRATOS = new ContratosImpl("jdbc:sqlite:fivet.db");
+
+  private ApiRestEndpoints() {
+    //nothing
+  }
 
   /**
-   * Contrato 03 : Buscar Fichas con filtro.
-   *
-   * @param query to search.
-   * @return the {@link List} of {@link Ficha}
+   * @param ctx the Javalin {@link Context}
    */
-  List<Ficha> buscarFicha(String query);
+  public static void getAllFichas(Context ctx) {
 
-  List<Ficha> getAllFichas();
+    log.debug("Getting all the fichas...");
+    List<Ficha> fichas = CONTRATOS.getAllFichas();
+    ctx.json(fichas);
+
+  }
+
+
 }
