@@ -67,7 +67,7 @@ public class ApiRestEndpoints {
     // Getting all the fichas
     List<Ficha> fichas = CONTRATOS.getAllFichas();
 
-    fichas.forEach(ficha -> log.debug("Ficha: {}.",Entity.toString(ficha)));
+    //fichas.forEach(ficha -> log.debug("Ficha: {}.",Entity.toString(ficha)));
 
     ctx.json(fichas);
   }
@@ -142,7 +142,7 @@ public class ApiRestEndpoints {
     // Finding the controles
     List<Control> controles = CONTRATOS.getAllControlesFromFicha(numero);
 
-    controles.forEach(control -> log.debug("Control: {}.",Entity.toString(control)));
+    //controles.forEach(control -> log.debug("Control: {}.",Entity.toString(control)));
 
     ctx.json(controles);
 
@@ -225,6 +225,8 @@ public class ApiRestEndpoints {
 
     // Finding the duenio
     Persona duenio = CONTRATOS.getPersonaFromFicha(numero);
+
+    //log.debug("Persona: {}.", Entity.toString(duenio));
 
     ctx.json(duenio);
 
