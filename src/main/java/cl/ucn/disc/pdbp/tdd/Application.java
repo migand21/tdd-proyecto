@@ -33,6 +33,7 @@ import io.javalin.plugin.json.JavalinJson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.Modifier;
 import java.time.ZonedDateTime;
 
 /**
@@ -60,6 +61,7 @@ public final class Application {
     // Gson configuration
     Gson gson = new GsonBuilder()
               .setPrettyPrinting()
+              .excludeFieldsWithModifiers(Modifier.TRANSIENT)
               .create();
 
     JavalinJson.setFromJsonMapper(gson::fromJson);

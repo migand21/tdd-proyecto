@@ -44,7 +44,7 @@ public final class Ficha {
    * ID.
    */
   @DatabaseField(generatedId = true)
-  private Long id;
+  private transient Long id;
 
   /**
    * Numero de ficha.
@@ -68,7 +68,7 @@ public final class Ficha {
    * fecha de nacimiento del animal.
    */
   @DatabaseField(persisterClass = ZonedDateTimeType.class)
-  private ZonedDateTime fechaNacimiento;
+  private transient ZonedDateTime fechaNacimiento;
 
   /**
    * raza del animal.
@@ -98,13 +98,13 @@ public final class Ficha {
    * The duenio.
    */
   @DatabaseField(foreign = true, canBeNull = false, foreignAutoRefresh = true)
-  private Persona duenio;
+  private transient Persona duenio;
 
   /**
    * controles pertenecientes a esta ficha
    */
   @ForeignCollectionField(eager = false)
-  private ForeignCollection<Control> controles;
+  private transient ForeignCollection<Control> controles;
 
   /**
    * Empty Constructor.

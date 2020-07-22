@@ -42,7 +42,8 @@ public class Persona {
    * The id.
    */
   @DatabaseField(generatedId = true)
-  private Long id;
+  private transient Long id;
+
   /**
    * The name.
    */
@@ -90,7 +91,7 @@ public class Persona {
    * fichas que tiene esta persona
    */
   @ForeignCollectionField(eager = false)
-  private ForeignCollection<Ficha> fichas;
+  private transient ForeignCollection<Ficha> fichas;
 
   /**
    * Empty Constructor.

@@ -42,19 +42,19 @@ public class Control {
    * Id.
    */
   @DatabaseField(generatedId = true)
-  private Long id;
+  private transient Long id;
 
   /**
    * fecha del control.
    */
   @DatabaseField(persisterClass = ZonedDateTimeType.class)
-  private ZonedDateTime fecha;
+  private transient ZonedDateTime fecha;
 
   /**
    * fecha del proximo control.
    */
   @DatabaseField(persisterClass = ZonedDateTimeType.class)
-  private ZonedDateTime fechaProximoControl;
+  private transient ZonedDateTime fechaProximoControl;
 
   /**
    * temperatura del paciente en grados celcius.
@@ -90,7 +90,7 @@ public class Control {
    * ficha a la cual pertenece este control.
    */
   @DatabaseField(foreign = true, canBeNull = false, foreignAutoRefresh = true)
-  private Ficha ficha;
+  private transient Ficha ficha;
 
   /**
    * Empty Constructor.
