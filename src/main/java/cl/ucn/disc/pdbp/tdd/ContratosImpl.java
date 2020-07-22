@@ -308,12 +308,12 @@ public class ContratosImpl implements Contratos {
   }
 
   /**
-   * @param idFicha to find
+   * @param numeroFicha to find
    * @return the ficha
    */
   @Override
-  public Ficha getFicha(Long idFicha) {
-    return repoFicha.findById(idFicha);
+  public Ficha getFicha(Long numeroFicha) {
+    return repoFicha.findAll("numero",Long.toString(numeroFicha)).get(0);
   }
 
   /**
