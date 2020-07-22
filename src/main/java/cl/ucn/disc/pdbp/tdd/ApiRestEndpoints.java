@@ -25,6 +25,7 @@
 package cl.ucn.disc.pdbp.tdd;
 
 import cl.ucn.disc.pdbp.tdd.model.main.*;
+import cl.ucn.disc.pdbp.tdd.model.utils.Entity;
 import io.javalin.http.Context;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -48,7 +49,7 @@ public class ApiRestEndpoints {
   /**
    * The contratos instance.
    */
-  private static final Contratos CONTRATOS = new ContratosImpl("jdbc:sqlite:fivet.db");
+  private static final ContratosImpl CONTRATOS = new ContratosImpl("jdbc:sqlite:fivet.db");
 
   private ApiRestEndpoints() {
     //nothing
@@ -65,6 +66,8 @@ public class ApiRestEndpoints {
 
     // Getting all the fichas
     List<Ficha> fichas = CONTRATOS.getAllFichas();
+
+    fichas.forEach(ficha -> log.debug("Ficha: {}.",Entity.toString(ficha)));
 
     ctx.json(fichas);
   }
@@ -94,22 +97,22 @@ public class ApiRestEndpoints {
   public static void insertFicha( Context ctx) {
 
     // Obtaining all the data
-    Long numero = Long.parseLong(ctx.formParam("numero"));
-    String nombrePaciente = ctx.formParam("nombrePaciente");
-    String especie = ctx.formParam("especie");
-    ZonedDateTime fechaNacimiento = ZonedDateTime.parse(ctx.formParam("fechaNacimiento"));
-    String raza = ctx.formParam("raza");
+    Long numero = Long.parseLong(ctx.queryParam("numero"));
+    String nombrePaciente = ctx.queryParam("nombrePaciente");
+    String especie = ctx.queryParam("especie");
+    ZonedDateTime fechaNacimiento = ZonedDateTime.parse(ctx.queryParam("fechaNacimiento"));
+    String raza = ctx.queryParam("raza");
     Sexo sexo;
 
-    if(ctx.formParam("sexo").equalsIgnoreCase("hembra")) {
+    if(ctx.queryParam("sexo").equalsIgnoreCase("hembra")) {
       sexo = Sexo.HEMBRA;
     } else {
       sexo = Sexo.MACHO;
     }
-    String color = ctx.formParam("color");
+    String color = ctx.queryParam("color");
 
     Tipo tipo;
-    if(ctx.formParam("tipo").equalsIgnoreCase("interno")) {
+    if(ctx.queryParam("tipo").equalsIgnoreCase("interno")) {
       tipo = Tipo.INTERNO;
     } else {
       tipo = Tipo.EXTERNO;
@@ -117,12 +120,11 @@ public class ApiRestEndpoints {
 
     // We need the duenio as a Persona to create a ficha
     // TODO: aqui asumi que viene con el id del duenio como dato, y que las fechas vienen en el formato necesario
-    Long idDuenio = Long.parseLong(ctx.formParam("duenio"));
+    Long idDuenio = Long.parseLong(ctx.queryParam("duenio"));
     Persona duenio = CONTRATOS.getPersona(idDuenio);
 
     // Creating and inserting the ficha
     Ficha ficha = new Ficha(numero,nombrePaciente,especie,fechaNacimiento,raza,sexo,color,tipo,duenio);
-
     CONTRATOS.registrarPaciente(ficha);
 
   }
@@ -140,6 +142,8 @@ public class ApiRestEndpoints {
     // Finding the controles
     List<Control> controles = CONTRATOS.getAllControlesFromFicha(numero);
 
+    controles.forEach(control -> log.debug("Control: {}.",Entity.toString(control)));
+
     ctx.json(controles);
 
   }
@@ -152,19 +156,18 @@ public class ApiRestEndpoints {
   public static void insertControl(Context ctx) {
 
     // Obtaining the data
-    ZonedDateTime fecha= ZonedDateTime.parse(ctx.formParam("fecha"));
-    ZonedDateTime fechaProximoControl = ZonedDateTime.parse(ctx.formParam("fechaProximoControl"));
-    float temperatura = Float.parseFloat(ctx.formParam("temperatura"));
-    float peso = Float.parseFloat(ctx.formParam("peso"));
-    float altura = Float.parseFloat(ctx.formParam("altura"));
+    ZonedDateTime fecha= ZonedDateTime.parse(ctx.queryParam("fecha"));
+    ZonedDateTime fechaProximoControl = ZonedDateTime.parse(ctx.queryParam("fechaProximoControl"));
+    float temperatura = Float.parseFloat(ctx.queryParam("temperatura"));
+    float peso = Float.parseFloat(ctx.queryParam("peso"));
+    float altura = Float.parseFloat(ctx.queryParam("altura"));
 
-    String diagnostico = ctx.formParam("diagnostico");
-    String nombreVeterinario = ctx.formParam("nombreVeterinario");
+    String diagnostico = ctx.queryParam("diagnostico");
+    String nombreVeterinario = ctx.queryParam("nombreVeterinario");
 
     // We need the ficha to create a control
-    // TODO: aqui asumi que viene con el id de la ficha como dato, y que las fechas vienen en el formato necesario
-    Long idFicha = Long.parseLong(ctx.formParam("idFicha"));
-    Ficha ficha = CONTRATOS.getFicha(idFicha);
+    Long numeroFicha = Long.parseLong(ctx.pathParam("numeroFicha"));
+    Ficha ficha = CONTRATOS.getFicha(numeroFicha);
 
     // creating and inserting the control in the DB.
     Control control = new Control(fecha,fechaProximoControl,temperatura,peso,altura,diagnostico,nombreVeterinario,ficha);
@@ -183,6 +186,7 @@ public class ApiRestEndpoints {
     log.debug("Getting all the personas...");
 
     List<Persona> personas = CONTRATOS.getAllPersonas();
+    personas.forEach(persona -> log.debug("Persona: {}.", Entity.toString(persona)));
     ctx.json(personas);
   }
 
@@ -194,13 +198,13 @@ public class ApiRestEndpoints {
   public static void insertPersona( Context ctx) {
 
     // Obtaining the data
-    String nombre = ctx.formParam("nombre");
-    String apellido = ctx.formParam("nombre");
-    String rut = ctx.formParam("nombre");
-    String direccion = ctx.formParam("nombre");
-    Integer telefonoFijo = Integer.parseInt(ctx.formParam("telefonoFijo"));
-    Integer telefonoMovil = Integer.parseInt(ctx.formParam("telefonoMovil"));
-    String email = ctx.formParam("nombre");
+    String nombre = ctx.queryParam("nombre");
+    String apellido = ctx.queryParam("apellido");
+    String rut = ctx.queryParam("rut");
+    String direccion = ctx.queryParam("direccion");
+    Integer telefonoFijo = Integer.parseInt(ctx.queryParam("telefonoFijo"));
+    Integer telefonoMovil = Integer.parseInt(ctx.queryParam("telefonoMovil"));
+    String email = ctx.queryParam("email");
 
     // Creating and inserting the persona
     Persona persona = new Persona(nombre,apellido,rut,direccion,telefonoFijo,telefonoMovil,email);
