@@ -30,21 +30,20 @@ import io.javalin.Javalin;
 import io.javalin.apibuilder.ApiBuilder;
 import io.javalin.core.util.RouteOverviewPlugin;
 import io.javalin.plugin.json.JavalinJson;
+import java.lang.reflect.Modifier;
+import java.time.ZonedDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Modifier;
-import java.time.ZonedDateTime;
-
 /**
- * Application main Class
+ * Application main Class.
  *
  * @author Miguel Leon Garrido
  */
 public final class Application {
 
   /**
-   * The Logger (console)
+   * The Logger (console).
    */
   private static final Logger log = LoggerFactory.getLogger(Application.class);
 
@@ -56,6 +55,10 @@ public final class Application {
     //nothing
   }
 
+  /**
+   * This is what the program do when starting.
+   *
+   */
   public static void main(String[] args) {
 
     // Gson configuration
